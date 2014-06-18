@@ -12,10 +12,9 @@ class SequenceMatcher
   end
 
   def matcher(guess)
-    win?(guess)
     correct_position(guess)
     correct_letters(guess)
-    lose
+    lose win?(guess)
   end
 
   def win?(guess)
@@ -28,6 +27,9 @@ class SequenceMatcher
     answer.each_with_index do |char, i|
       @count += 1 if char == guess[i]
     end
+    if @count > 0
+      GuessPrinter.correct_position_message(@count)
+    end
     # i = 0
     # @count = 0
     # 4.times do
@@ -37,13 +39,14 @@ class SequenceMatcher
     #   i += 1
     # end
     # @count
-    GuessPrinter.correct_position_message(@count)
   end
 
   def correct_letters(guess)
     letters = answer.map {|letter| letter if guess.include?(letter)}
     @count_one = letters.join.length
-    GuessPrinter.correct_color_message(@count_one)
+    if @count_one > 0
+      GuessPrinter.correct_color_message(@count_one)
+    end
   end
 
   def lose
