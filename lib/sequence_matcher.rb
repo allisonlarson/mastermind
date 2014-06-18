@@ -13,9 +13,13 @@ class SequenceMatcher
     @count_one = 0
   end
 
-  def matcher(guess)
+  def run_for_clues(guess)
     correct_position(guess)
     correct_letters(guess)
+  end
+
+  def matcher(guess)
+    run_for_clues(guess)
     if win?(guess)
       GuessPrinter.win_message
     elsif @count > 0 or @count_one > 0
