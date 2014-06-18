@@ -8,7 +8,7 @@ class Validator
 
   def self.characters?
     input.each_char do |char|
-      ['g', 'y', 'b', 'r'].include?(char)
+      valid_chars.include?(char)
     end
   end
 
