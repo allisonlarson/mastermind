@@ -11,15 +11,13 @@ class ValidatorTest < Minitest::Test
     refute Validator.length?('ght')
   end
 
-  def test_it_uses_correct_characters
-    skip
-    validator = Validator.new('gggg')
-    assert validator.characters?
-  end
-
-  def test_it_uses_incorrect_characters
-    skip
-    validator = Validator.new('!kyz')
-    refute validator.characters?
-  end
+  # def test_it_uses_correct_characters
+  #   skip
+  #   assert Validator.characters?('gggg')
+  # end
+  #
+  # def test_it_uses_incorrect_characters
+  #   skip
+  #   refute Validator.characters?('!kyz')
+  # end
 end

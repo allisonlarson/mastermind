@@ -1,3 +1,4 @@
+require 'pry'
 class Validator
 
   attr_reader
@@ -6,12 +7,12 @@ class Validator
     input.length == 4
   end
 
-  def self.characters?
-    valid_chars = []
-    input.each_char do |char|
-      valid_chars.include?(char)
-    end
-  end
+  # def self.characters?(input)
+  #   # valid_chars = ['r', 'g', 'y', 'b']
+  #   input.each_char do |char|
+  #     ['r', 'g', 'y', 'b'].include?(char)
+  #   end
+  # end
 
 
 end

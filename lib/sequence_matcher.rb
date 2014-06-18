@@ -6,9 +6,8 @@ class SequenceMatcher
 
   attr_accessor :answer, :count, :count_one
 
-  def initialize
-    # @answer = answer
-    @answer ||= Sequence.new.answer
+  def initialize(answer)
+    @answer = answer
     @count  = 0
     @count_one = 0
   end
@@ -16,21 +15,6 @@ class SequenceMatcher
   def run_for_clues(guess)
     correct_position(guess)
     correct_letters(guess)
-  end
-
-  def matcher(guess)
-    run_for_clues(guess)
-    if win?(guess)
-      GuessPrinter.win_message
-    elsif @count > 0 or @count_one > 0
-      print_clues
-    else
-      lose?
-    end
-  end
-
-  def win?(guess)
-    answer == guess
   end
 
   def correct_position(guess)
@@ -44,6 +28,27 @@ class SequenceMatcher
     @count_one = letters.join.length
     @count_one -= @count
   end
+
+### Rip matcher apart
+
+  def matcher(guess)
+    run_for_clues(guess)
+    if win?(guess)
+      GuessPrinter.win_message
+    elsif @count > 0 or @count_one > 0
+      print_clues
+    else
+      lose?
+    end
+  end
+
+### Move the rest of these elsewhere:i
+
+  def win?(guess)
+    answer == guess
+  end
+
+
 
   def lose?
     lose = false

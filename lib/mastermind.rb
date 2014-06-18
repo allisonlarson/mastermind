@@ -1,44 +1,23 @@
 require_relative 'guess'
 require_relative 'sequence_matcher'
 require_relative 'validator'
+require_relative 'guess_printer'
+require_relative 'sequence_generator'
 require 'pry'
 
 
 class Mastermind
-  def self.run
-    new.start
-  end
+  # def self.run
+  #   new.start
+  # end
 
-  attr_accessor :command, :guesses, :current
+  attr_accessor :command, :guesses, :current, :answer
 
   def initialize
-    @command = ''
+    # @command = ''
     @current = ''
     @guesses = []
-  end
-
-  def start
-    puts "Let's play Mastermind!"
-    while command != 'q'
-      print "Enter (s)tart, (h)elp, or (q)uit: "
-      command = gets.chomp
-        case command
-        when 's' then execute_game
-        when 'h' then execute_help
-        end
-
-    end
-    puts "Thanks for playing!"
-  end
-
-
-  def execute_game
-    while command != 'q'
-      print "Enter your guess: "
-      input = gets.chomp
-      validate_input(input)
-      sequence_matches
-    end
+    @answer = Sequence.new.answer
   end
 
   def validate_input(input)
@@ -56,6 +35,15 @@ class Mastermind
   def guess(input)
     @current = Guess.new(input)
     @guesses << @current
+    message = sequence_matches
+    if message.include?("You are correct")
+      @game_over = true
+    end
+    return message
+  end
+
+  def over?
+    @game_over
   end
 
   def history
@@ -65,7 +53,7 @@ class Mastermind
   end
 
   def sequence_matches
-    sequence_matcher = SequenceMatcher.new
+    sequence_matcher = SequenceMatcher.new(@answer)
     sequence_matcher.matcher(@current.sequence)
   end
 end

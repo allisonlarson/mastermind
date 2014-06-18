@@ -28,19 +28,11 @@ class MastermindTest < Minitest::Test
     assert_equal ['RRRR', 'BBBB'], mastermind.history
   end
 
-  def test_guess_matches_sequence
-    # skip
+  def test_that_the_guess_is_checked_by_the_matcher
     mastermind = Mastermind.new
     mastermind.guess('rrrr')
-    assert_equal "true", mastermind.sequence_matches
+    assert mastermind.sequence_matches.include?("positions.")
   end
-
-  # def test_guess_does_not_match_sequence
-  #   skip
-  #   mastermind = Mastermind.new
-  #   mastermind.validate_input('rrrr')
-  #   assert_equal false, mastermind.sequence_matches(guess)
-  # end
 
   def test_validates_input
     mastermind = Mastermind.new
@@ -51,5 +43,12 @@ class MastermindTest < Minitest::Test
   def test_incorrect_input
     mastermind = Mastermind.new
     assert_equal "Error: Try a different guess.", mastermind.validate_input('yyy')
+  end
+
+  def test_player_can_win_on_the_first_guess
+    mastermind = Mastermind.new
+    correct_answer = mastermind.answer.join
+    result = mastermind.guess(correct_answer)
+    assert result.include?("correct")
   end
 end
