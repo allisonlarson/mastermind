@@ -4,16 +4,15 @@ require_relative '../lib/validator'
 
 class ValidatorTest < Minitest::Test
   def test_it_has_four_characters
-    validator = Validator.new('yyyy')
-    assert validator.length?(4)
+    assert Validator.length?('yyyy')
   end
 
   def test_it_does_not_have_four_characters
-    validator = Validator.new('ght')
-    refute validator.length?(4)
+    refute Validator.length?('ght')
   end
 
   def test_it_uses_correct_characters
+    skip
     validator = Validator.new('gggg')
     assert validator.characters?
   end

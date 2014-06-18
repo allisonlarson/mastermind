@@ -6,7 +6,8 @@ class SequenceMatcher
   attr_reader :answer
 
   def initialize(answer)
-    @answer ||= Sequence.new.answer
+    @answer = answer
+    # @answer ||= Sequence.new.answer
     @count  = 0
   end
 
@@ -16,7 +17,7 @@ class SequenceMatcher
     correct_letters(guess)
     lose
   end
-  
+
   def win?(guess)
     if answer == guess
       GuessPrinter.win_message
