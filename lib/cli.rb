@@ -27,8 +27,12 @@ class CLI
     while !game.over?
       print "Enter your guess: "
       input = gets.chomp
-      #validate_input(input)
-      puts game.guess(input)
+      puts game.validate_input(input)
+
     end
+  end
+
+  def execute_help
+    puts "Play the damn game, son."
   end
 end

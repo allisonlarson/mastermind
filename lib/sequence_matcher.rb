@@ -4,61 +4,34 @@ require 'pry'
 
 class SequenceMatcher
 
-  attr_accessor :answer, :count, :count_one
+  attr_accessor :answer, :positions, :colors, :clues
 
   def initialize(answer)
     @answer = answer
-    @count  = 0
-    @count_one = 0
-  end
-
-  def run_for_clues(guess)
-    correct_position(guess)
-    correct_letters(guess)
+    @positions  = 0
+    @colors = 0
+    @clues = {}
   end
 
   def correct_position(guess)
     answer.each_with_index do |char, i|
-      @count += 1 if char == guess[i]
+      @positions += 1 if char == guess[i]
     end
   end
 
   def correct_letters(guess)
     letters = answer.map {|letter| letter if guess.include?(letter)}
-    @count_one = letters.join.length
-    @count_one -= @count
+    @colors = letters.join.length
+    @colors -= @positions
   end
-
-### Rip matcher apart
 
   def matcher(guess)
-    run_for_clues(guess)
-    if win?(guess)
-      GuessPrinter.win_message
-    elsif @count > 0 or @count_one > 0
-      print_clues
-    else
-      lose?
-    end
+    correct_position(guess)
+    correct_letters(guess)
+    @clues = {
+      "correct_positions" => positions,
+      "correct_letters" => colors,
+    }
   end
 
-### Move the rest of these elsewhere:i
-
-  def win?(guess)
-    answer == guess
-  end
-
-
-
-  def lose?
-    lose = false
-    if @count && @count_one == 0
-      lose = true
-      GuessPrinter.incorrect_message
-    end
-  end
-
-  def print_clues
-    GuessPrinter.correct_position_message(count)+ " " +GuessPrinter.correct_color_message(count_one)
-  end
 end

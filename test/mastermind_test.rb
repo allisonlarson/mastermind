@@ -31,7 +31,7 @@ class MastermindTest < Minitest::Test
   def test_that_the_guess_is_checked_by_the_matcher
     mastermind = Mastermind.new
     mastermind.guess('rrrr')
-    assert mastermind.sequence_matches.include?("positions.")
+    assert mastermind.game_message.include?("positions")
   end
 
   def test_validates_input

@@ -7,14 +7,10 @@ require 'pry'
 
 
 class Mastermind
-  # def self.run
-  #   new.start
-  # end
 
   attr_accessor :command, :guesses, :current, :answer
 
   def initialize
-    # @command = ''
     @current = ''
     @guesses = []
     @answer = Sequence.new.answer
@@ -35,7 +31,8 @@ class Mastermind
   def guess(input)
     @current = Guess.new(input)
     @guesses << @current
-    message = sequence_matches
+    message = game_message
+    puts GuessPrinter.taken_turns(turns)
     if message.include?("You are correct")
       @game_over = true
     end
@@ -53,7 +50,18 @@ class Mastermind
   end
 
   def sequence_matches
-    sequence_matcher = SequenceMatcher.new(@answer)
-    sequence_matcher.matcher(@current.sequence)
+    @sequence_matcher = SequenceMatcher.new(@answer)
+    @sequence_matcher.matcher(@current.sequence)
+  end
+
+  def game_message
+    sequence_matches
+    if @sequence_matcher.clues["correct_positions"] == 4
+      GuessPrinter.win_message
+    elsif @sequence_matcher.clues["correct_positions"] > 0 or @sequence_matcher.clues["correct_letters"] > 0
+      GuessPrinter.correct_position_message(@sequence_matcher.clues["correct_positions"]) + " " + GuessPrinter.correct_color_message(@sequence_matcher.clues["correct_letters"])
+    else
+      GuessPrinter.incorrect_message
+    end
   end
 end
