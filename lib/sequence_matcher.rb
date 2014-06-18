@@ -11,26 +11,28 @@ class SequenceMatcher
     @count  = 0
     @count_one = 0
   end
-  # 
-  # def matcher(guess)
-  #   if win?(guess)
-  #   elsif lose
-  #   end
-  # end
+
+  def matcher(guess)
+    correct_position(guess)
+    correct_letters(guess)
+    if win?(guess)
+      GuessPrinter.win_message
+    elsif @count > 0 or @count_one > 0
+      print_clues
+    else
+      lose?
+    end
+  end
 
   def win?(guess)
-    if answer == guess
-      GuessPrinter.win_message
-    end
+    answer == guess
   end
 
   def correct_position(guess)
     answer.each_with_index do |char, i|
       @count += 1 if char == guess[i]
     end
-    # if @count > 0
-    #   GuessPrinter.correct_position_message(@count)
-    # end
+
   end
 
   def correct_letters(guess)
@@ -38,19 +40,16 @@ class SequenceMatcher
     @count_one = letters.join.length
     @count_one -= @count
   end
-    # if @count_one > 0
-    #   GuessPrinter.correct_color_message(@count_one)
-    # end
 
-  def lose
+  def lose?
+    lose = false
     if @count && @count_one == 0
+      lose = true
       GuessPrinter.incorrect_message
     end
   end
 
   def print_clues
-    if @count > 0 or @count_one > 0
-      GuessPrinter.correct_position_message(count)+ " " +GuessPrinter.correct_color_message(count_one)
-    end
+    GuessPrinter.correct_position_message(count)+ " " +GuessPrinter.correct_color_message(count_one)
   end
 end

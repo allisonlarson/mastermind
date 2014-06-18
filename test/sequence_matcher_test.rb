@@ -4,7 +4,6 @@ require 'minitest/pride'
 require_relative '../lib/sequence_matcher'
 require_relative '../lib/sequence_generator'
 require_relative '../lib/guess'
-require 'pry'
 
 class SequenceMatcherTest < Minitest::Test
   def test_it_has_a_sequence
@@ -15,7 +14,7 @@ class SequenceMatcherTest < Minitest::Test
   def test_it_matches_guess_and_sequence
     sequence_matcher = SequenceMatcher.new(['R', 'Y', 'B', 'G'])
     guess = Guess.new('rybg')
-    assert_equal "You are correct!", sequence_matcher.win?(guess.sequence)
+    assert_equal true, sequence_matcher.win?(guess.sequence)
   end
 
   def test_it_alerts_when_correct_letters_are_used
@@ -51,7 +50,7 @@ class SequenceMatcherTest < Minitest::Test
     guess = Guess.new('gggg')
     sequence_matcher.correct_position(guess.sequence)
     sequence_matcher.correct_letters(guess.sequence)
-    assert_equal "No common colors or positions.", sequence_matcher.lose
+    assert_equal "No common colors or positions.", sequence_matcher.lose?
   end
 
   def test_print_clues
@@ -63,21 +62,18 @@ class SequenceMatcherTest < Minitest::Test
   end
 
   def test_runs_the_matcher_and_wins
-    skip
     sequence_matcher = SequenceMatcher.new(['Y', 'Y', 'Y', 'Y'])
     guess = Guess.new('yyyy')
     assert_equal "You are correct!", sequence_matcher.matcher(guess.sequence)
   end
 
   def test_runs_matcher_and_has_correct_letters_and_positions
-    skip
     sequence_matcher = SequenceMatcher.new(['Y', 'Y', 'R', 'G'])
     guess = Guess.new('yygr')
-    assert_equal "You have 2 correct positions. You have 3 correct colors in incorrect positions.", sequence_matcher.matcher(guess.sequence)
+    assert_equal "You have 2 correct positions. You have 2 correct colors in incorrect positions.", sequence_matcher.matcher(guess.sequence)
   end
 
   def test_runs_matcher_and_loses
-    skip
     sequence_matcher = SequenceMatcher.new(['Y', 'Y', 'Y', 'Y'])
     guess = Guess.new('rrrr')
     assert_equal "No common colors or positions.", sequence_matcher.matcher(guess.sequence)

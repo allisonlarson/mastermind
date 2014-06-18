@@ -7,6 +7,7 @@ class Validator
   end
 
   def self.characters?
+    valid_chars = []
     input.each_char do |char|
       valid_chars.include?(char)
     end
