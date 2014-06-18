@@ -17,20 +17,19 @@ class Mastermind
     @guesses = []
   end
 
-  # def start
-  #   puts "Let's play Mastermind!"
-  #   while command != 'q'
-  #     print "Enter (s)tart, (h)elp, or (q)uit: "
-  #     command = gets.chomp
-  #       case command
-  #       when 's' then execute_game
-  #       when 'h' then execute_help
-  #       end
-  #
-  #     end
-  #   end
-  #   puts "Thanks for playing!"
-  # end
+  def start
+    puts "Let's play Mastermind!"
+    while command != 'q'
+      print "Enter (s)tart, (h)elp, or (q)uit: "
+      command = gets.chomp
+        case command
+        when 's' then execute_game
+        when 'h' then execute_help
+        end
+
+    end
+    puts "Thanks for playing!"
+  end
 
 
   def execute_game
@@ -43,11 +42,10 @@ class Mastermind
   end
 
   def validate_input(input)
-    binding.pry
     if Validator.length?(input)
       guess(input)
     else
-      puts "Error: Try a different guess."
+      "Error: Try a different guess."
     end
   end
 
@@ -66,9 +64,8 @@ class Mastermind
     end
   end
 
-  def sequence_matches(guess)
+  def sequence_matches
     sequence_matcher = SequenceMatcher.new
-    sequence.matcher.match(guess.sequence)
+    sequence_matcher.matcher(@current.sequence)
   end
-
 end

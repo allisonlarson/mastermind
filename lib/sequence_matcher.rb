@@ -1,13 +1,14 @@
 require_relative 'guess_printer'
+require_relative 'sequence_generator'
 require 'pry'
 
 class SequenceMatcher
 
-  attr_reader :answer, :count, :count_one
+  attr_accessor :answer, :count, :count_one
 
-  def initialize(answer)
-    @answer = answer
-    # @answer ||= Sequence.new.answer
+  def initialize
+    # @answer = answer
+    @answer ||= Sequence.new.answer
     @count  = 0
     @count_one = 0
   end
@@ -32,7 +33,6 @@ class SequenceMatcher
     answer.each_with_index do |char, i|
       @count += 1 if char == guess[i]
     end
-
   end
 
   def correct_letters(guess)

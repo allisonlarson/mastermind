@@ -29,24 +29,27 @@ class MastermindTest < Minitest::Test
   end
 
   def test_guess_matches_sequence
-    skip
+    # skip
     mastermind = Mastermind.new
     mastermind.guess('rrrr')
-    assert_equal true, mastermind.sequence_matches?
+    assert_equal "true", mastermind.sequence_matches
   end
 
-  def test_guess_does_not_match_sequence
-    skip
-    mastermind = Mastermind.new
-    mastermind.guess('rrrr')
-    assert_equal false, mastermind.sequence_matches?
-  end
+  # def test_guess_does_not_match_sequence
+  #   skip
+  #   mastermind = Mastermind.new
+  #   mastermind.validate_input('rrrr')
+  #   assert_equal false, mastermind.sequence_matches(guess)
+  # end
 
   def test_validates_input
     mastermind = Mastermind.new
-    assert_equal ['Y','Y','Y','Y'], mastermind.validate_input('yyyy')
+    mastermind.validate_input('yyyy')
+    assert_equal ['Y','Y','Y','Y'], mastermind.current.sequence
+  end
 
   def test_incorrect_input
     mastermind = Mastermind.new
     assert_equal "Error: Try a different guess.", mastermind.validate_input('yyy')
+  end
 end
