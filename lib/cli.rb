@@ -10,11 +10,11 @@ class CLI
 
   def run
     puts
-    puts "Let's play Mastermind!".rjust(20)
+    puts "*****************Let's play Mastermind!*****************"
     puts
     command = ''
 
-    while command != 'q'
+    while command != ('q')
       puts
       print "Enter "+"(s)tart".colorize(:green) +", (h)elp".colorize(:yellow) +", or "+"(q)uit".colorize(:red)+":"
       command = gets.chomp
@@ -23,7 +23,7 @@ class CLI
         when 'h' then execute_help
       end
     end
-    puts "Thanks for playing!"
+    puts "*******************Thanks for playing!*******************"
     puts
   end
 
@@ -34,10 +34,9 @@ class CLI
       input = gets.chomp
       case input
       when 'history' then give_history
-
+      when 'quit' then early_quit
       else puts game.validate_input(input)
       end
-
     end
   end
 
@@ -46,8 +45,16 @@ class CLI
     puts
   end
 
+  def early_quit
+    puts game.early_quit
+    puts
+  end
+
   def execute_help
-    puts "Play the damn game, son.".colorize(:cyan)
+    puts
+    puts "Play the damn game, son.
+     Enter "+"(b)lue".colorize(:blue)+", "+"(g)reen".colorize(:green)+", "+"(y)ellow".colorize(:yellow)+", and/or "+"(r)ed".colorize(:red)+" to guess the sequence.
+     If it's too hard, just quit. We can't all be masterminds."
     puts
   end
 end

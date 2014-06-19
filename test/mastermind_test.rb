@@ -2,6 +2,7 @@ gem 'minitest', '~> 5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/mastermind'
+require 'pry'
 
 class MastermindTest < Minitest::Test
   def test_it_exsists
@@ -42,13 +43,13 @@ class MastermindTest < Minitest::Test
 
   def test_incorrect_input
     mastermind = Mastermind.new
-    assert_equal "Error: Try a different guess.", mastermind.validate_input('yyy')
+    assert_equal "Error: Try a different guess.".colorize(:red), mastermind.validate_input('yyy')
   end
 
   def test_player_can_win_on_the_first_guess
     mastermind = Mastermind.new
     correct_answer = mastermind.answer.join
     result = mastermind.guess(correct_answer)
-    assert result.include?("correct")
+    assert true, mastermind.over?
   end
 end

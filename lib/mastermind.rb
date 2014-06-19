@@ -51,6 +51,11 @@ class Mastermind
     end
   end
 
+  def early_quit
+    @game_over = true
+    "Too tough for you?"
+  end
+
   def sequence_matches
     @sequence_matcher = SequenceMatcher.new(@answer)
     @sequence_matcher.matcher(@current.sequence)
