@@ -1,9 +1,9 @@
 class Guess
 
-  attr_accessor :sequence
+  attr_accessor :sequence, :created_at
 
   def initialize(input)
     @sequence = input.upcase.split(//)
-    @started_at = Time.now
+    @created_at = Time.now
   end
 end

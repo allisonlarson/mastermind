@@ -9,11 +9,14 @@ class CLI
   end
 
   def run
-    puts "Let's play Mastermind!"
+    puts
+    puts "Let's play Mastermind!".rjust(20)
+    puts
     command = ''
 
     while command != 'q'
-      print "Enter (s)tart, (h)elp, or (q)uit: "
+      puts
+      print "Enter "+"(s)tart".colorize(:green) +", (h)elp".colorize(:yellow) +", or "+"(q)uit".colorize(:red)+":"
       command = gets.chomp
       case command
         when 's' then execute_game
@@ -21,18 +24,30 @@ class CLI
       end
     end
     puts "Thanks for playing!"
+    puts
   end
 
   def execute_game
     while !game.over?
+      puts
       print "Enter your guess: "
       input = gets.chomp
-      puts game.validate_input(input)
+      case input
+      when 'history' then give_history
+
+      else puts game.validate_input(input)
+      end
 
     end
   end
 
+  def give_history
+    puts game.history
+    puts
+  end
+
   def execute_help
-    puts "Play the damn game, son."
+    puts "Play the damn game, son.".colorize(:cyan)
+    puts
   end
 end

@@ -3,7 +3,7 @@ require_relative 'sequence_matcher'
 require_relative 'validator'
 require_relative 'guess_printer'
 require_relative 'sequence_generator'
-require 'pry'
+require 'colorize'
 
 
 class Mastermind
@@ -20,7 +20,7 @@ class Mastermind
     if Validator.length?(input)
       guess(input)
     else
-      "Error: Try a different guess."
+      "Error: Try a different guess.".colorize(:red)
     end
   end
 
@@ -32,15 +32,17 @@ class Mastermind
     @current = Guess.new(input)
     @guesses << @current
     message = game_message
-    puts GuessPrinter.taken_turns(turns)
-    if message.include?("You are correct")
+    if @sequence_matcher.clues["correct_positions"] == 4
       @game_over = true
     end
-    return message
+    puts message
+    puts GuessPrinter.taken_turns(turns)
+
   end
 
   def over?
     @game_over
+
   end
 
   def history
@@ -57,9 +59,9 @@ class Mastermind
   def game_message
     sequence_matches
     if @sequence_matcher.clues["correct_positions"] == 4
-      GuessPrinter.win_message
+      GuessPrinter.win_message(@guesses[0])
     elsif @sequence_matcher.clues["correct_positions"] > 0 or @sequence_matcher.clues["correct_letters"] > 0
-      GuessPrinter.correct_position_message(@sequence_matcher.clues["correct_positions"]) + " " + GuessPrinter.correct_color_message(@sequence_matcher.clues["correct_letters"])
+      GuessPrinter.correct_position_message(@sequence_matcher.clues["correct_positions"], @sequence_matcher.clues["correct_letters"])
     else
       GuessPrinter.incorrect_message
     end
