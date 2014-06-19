@@ -13,36 +13,67 @@ class Mastermind
   def initialize
     @current = ''
     @guesses = []
-    @answer = Sequence.new.answer
+    @answer = nil
   end
 
-  def validate_input(input)
-    if Validator.length?(input)
-      guess(input)
+  def beginner_game(input)
+    @answer ||= Sequence.new.beginner
+    validate_input(input, 4)
+  end
+
+  def intermediate_game(input)
+    @answer ||= Sequence.new.intermediate
+    validate_input(input, 6)
+  end
+
+  def expert_game(input)
+    @answer ||= Sequence.new.expert
+    validate_input(input, 8)
+  end
+
+  def validate_input(input, number)
+    if Validator.length?(input, number)
+      guess(input, number)
     else
       "Error: Try a different guess.".colorize(:red)
     end
   end
 
-  def turns
-    @guesses.length
-  end
-
-  def guess(input)
+  def guess(input, number)
     @current = Guess.new(input)
     @guesses << @current
-    message = game_message
-    if @sequence_matcher.clues["correct_positions"] == 4
+    message = game_message(number)
+    if @sequence_matcher.clues["correct_positions"] == number
       @game_over = true
     end
     puts message
     puts GuessPrinter.taken_turns(turns)
+  end
 
+  def game_message(number)
+    sequence_matches
+    if @sequence_matcher.clues["correct_positions"] == number
+      GuessPrinter.win_message(@guesses[0])
+    elsif @sequence_matcher.clues["correct_positions"] > 0 or @sequence_matcher.clues["correct_letters"] > 0
+      GuessPrinter.correct_position_message(@sequence_matcher.clues["correct_positions"], @sequence_matcher.clues["correct_letters"])
+    else
+      GuessPrinter.incorrect_message
+    end
+  end
+
+  def sequence_matches
+    @sequence_matcher = SequenceMatcher.new(@answer)
+    @sequence_matcher.matcher(@current.sequence)
   end
 
   def over?
     @game_over
+  end
 
+  def start_new
+    @game_over = false
+    @guesses = []
+    @answer = nil
   end
 
   def history
@@ -51,24 +82,13 @@ class Mastermind
     end
   end
 
+  def turns
+    @guesses.length
+  end
+
   def early_quit
     @game_over = true
     "Too tough for you?"
   end
 
-  def sequence_matches
-    @sequence_matcher = SequenceMatcher.new(@answer)
-    @sequence_matcher.matcher(@current.sequence)
-  end
-
-  def game_message
-    sequence_matches
-    if @sequence_matcher.clues["correct_positions"] == 4
-      GuessPrinter.win_message(@guesses[0])
-    elsif @sequence_matcher.clues["correct_positions"] > 0 or @sequence_matcher.clues["correct_letters"] > 0
-      GuessPrinter.correct_position_message(@sequence_matcher.clues["correct_positions"], @sequence_matcher.clues["correct_letters"])
-    else
-      GuessPrinter.incorrect_message
-    end
-  end
 end

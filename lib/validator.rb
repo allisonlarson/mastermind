@@ -1,11 +1,18 @@
 require 'pry'
 class Validator
 
-  attr_reader
 
-  def self.length?(input)
-    input.length == 4
+  def self.length?(input, number)
+    input.length == number
   end
+  # 
+  # def self.intermediate_length?(input)
+  #   input.length == 6
+  # end
+  #
+  # def self.expert_length?(input)
+  #   input.length == 8
+  # end
 
   # def self.characters?(input)
   #   # valid_chars = ['r', 'g', 'y', 'b']
@@ -13,6 +20,4 @@ class Validator
   #     ['r', 'g', 'y', 'b'].include?(char)
   #   end
   # end
-
-
 end

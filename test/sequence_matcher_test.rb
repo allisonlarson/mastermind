@@ -7,10 +7,6 @@ require_relative '../lib/guess'
 require 'pry'
 
 class SequenceMatcherTest < Minitest::Test
-  def test_it_has_a_sequence
-    sequence_matcher = SequenceMatcher.new(['R', 'R', 'R', 'G'])
-    assert_equal true, sequence_matcher.respond_to?(:answer)
-  end
 
   def test_it_alerts_when_correct_letters_are_used
     sequence_matcher = SequenceMatcher.new(['Y', 'G', 'B', 'R'])
@@ -48,6 +44,33 @@ class SequenceMatcherTest < Minitest::Test
     assert 1, sequence_matcher.clues["correct_positions"]
   end
 
+  def test_it_works_for_6_positions
+    sequence_matcher = SequenceMatcher.new(['Y', 'R', 'G', 'B', 'C','M'])
+    guess = Guess.new('rrgcy')
+    sequence_matcher.matcher(guess.sequence)
+    assert_equal 2, sequence_matcher.positions
+  end
+
+  def test_it_works_for_8_positions
+    sequence_matcher = SequenceMatcher.new(['R','G','B','Y','C','M'])
+    guess = Guess.new('mmmmmmmm')
+    sequence_matcher.matcher(guess.sequence)
+    assert_equal 1, sequence_matcher.positions
+  end
+
+  def test_it_works_for_6_positions
+    sequence_matcher = SequenceMatcher.new(['Y', 'R', 'G', 'B', 'C','M'])
+    guess = Guess.new('rrgcy')
+    sequence_matcher.matcher(guess.sequence)
+    assert_equal 2, sequence_matcher.colors
+  end
+
+  def test_it_works_for_8_positions
+    sequence_matcher = SequenceMatcher.new(['R','G','B','Y','C','M'])
+    guess = Guess.new('mmmmmmmm')
+    sequence_matcher.matcher(guess.sequence)
+    assert_equal 0, sequence_matcher.colors
+  end
   # def test_it_matches_guess_and_sequence
   #   skip
   #   sequence_matcher = SequenceMatcher.new(['R', 'Y', 'B', 'G'])

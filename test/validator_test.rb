@@ -3,21 +3,16 @@ require 'minitest/pride'
 require_relative '../lib/validator'
 
 class ValidatorTest < Minitest::Test
-  def test_it_has_four_characters
-    assert Validator.length?('yyyy')
+  def test_beginner_has_four_characters
+    assert = Validator.length?('yyyy', 4)
   end
 
-  def test_it_does_not_have_four_characters
-    refute Validator.length?('ght')
+  def test_intermediate_has_six_characters
+    assert Validator.length?('gggggg', 6)
   end
 
-  # def test_it_uses_correct_characters
-  #   skip
-  #   assert Validator.characters?('gggg')
-  # end
-  #
-  # def test_it_uses_incorrect_characters
-  #   skip
-  #   refute Validator.characters?('!kyz')
-  # end
+  def test_expert_has_eight_characters
+    assert Validator.length?('ggggyyyy', 8)
+  end
+
 end
