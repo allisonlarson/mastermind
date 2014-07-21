@@ -45,7 +45,7 @@ class MastermindTest < Minitest::Test
     skip
     mastermind = Mastermind.new
     correct_answer = mastermind.answer.join
-    mastermind.beginner_game(correct_answer)
+    mastermind.beginner_game(correct_answer=
     assert true, mastermind.over?
   end
 

@@ -1,29 +1,5 @@
 class SequenceGenerator
 
-  # def beginner
-  #   letters = [['R','G','B','Y'],['R','G','B','Y'],['R','G','B','Y'],['R','G','B','Y']]
-  #   letters.map {|a|
-  #     a.shuffle.first
-  #   }
-  # end
-  #
-  # def intermediate
-  # letters = [['R','G','B','Y','C'],['R','G','B','Y','C'],['R','G','B','Y','C'],['R','G','B','Y','C'],
-  # ['R','G','B','Y','C'],['R','G','B','Y','C']]
-  # letters.map {|a|
-  #   a.shuffle.first
-  # }
-  # end
-  #
-  # def expert
-  # letters = [['R','G','B','Y','C','M'],['R','G','B','Y','C','M'],['R','G','B','Y','C','M'],
-  # ['R','G','B','Y','C','M'],['R','G','B','Y','C','M'],['R','G','B','Y','C','M'],
-  # ['R','G','B','Y','C','M'],['R','G','B','Y','C','M']]
-  # letters.map {|a|
-  #   a.shuffle.first
-  # }
-  # end
-
   def generate(length, pool)
     @letters = (0...length).map { pool.sample}
   end
